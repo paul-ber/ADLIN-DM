@@ -13,10 +13,13 @@ zone_minimum: 172800     # 2 days
 zone_serial: "{{ ansible_date_time.epoch }}"
 
 allow_transfer:
-  - "100.64.51.1"
+  - "any"
 
 allow_query:
   - "any"
 
 listen_on:
   - "any"
+
+also_notify:
+  - "100.64.51.1"
