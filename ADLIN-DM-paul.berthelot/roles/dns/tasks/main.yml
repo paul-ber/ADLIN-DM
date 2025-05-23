@@ -13,7 +13,6 @@
     group: bind
     mode: '0755'
   loop:
-    - /etc/bind/zones
     - /var/log/bind
 
 - name: Configure BIND9 main configuration
@@ -39,7 +38,7 @@
 - name: Create zone file
   template:
     src: zone.j2
-    dest: "/etc/bind/zones/{{ domain_name }}.zone"
+    dest: "/etc/bind/db.{{ domain_name }}"
     owner: root
     group: bind
     mode: '0644'

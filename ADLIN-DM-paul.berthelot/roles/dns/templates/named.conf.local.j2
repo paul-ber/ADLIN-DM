@@ -2,7 +2,7 @@
 
 zone "{{ domain_name }}" {
     type master;
-    file "/etc/bind/zones/{{ domain_name }}.zone";
+    file "/etc/bind/db.{{ domain_name }}";
     allow-transfer { {{ allow_transfer | join('; ') }}; };
     allow-query { any; };
     notify yes;
