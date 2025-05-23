@@ -1,6 +1,4 @@
 ---
-# Student-specific variables (will be overridden by inventory)
-student_number: "{{ student_number | default('00') }}"
 domain_name: "{{ student_number }}.srs.adlin"
 dns_server_name: "ns1.{{ domain_name }}"
 
