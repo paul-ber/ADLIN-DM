@@ -12,7 +12,7 @@ zone_expire: 300         # 5 minutes
 zone_minimum: 172800     # 2 days
 zone_serial: "{{ ansible_date_time.epoch }}"
 
-w:
+allow_transfer:
   - "any"
 
 allow_query:
