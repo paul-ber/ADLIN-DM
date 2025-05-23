@@ -8,11 +8,11 @@ dns_forwarders:
 # Zone configuration
 zone_refresh: 86400      # 1 day
 zone_retry: 7200         # 2 hours
-zone_expire: 3600000     # ~41 days
+zone_expire: 300         # 5 minutes
 zone_minimum: 172800     # 2 days
 zone_serial: "{{ ansible_date_time.epoch }}"
 
-allow_transfer:
+w:
   - "any"
 
 allow_query:

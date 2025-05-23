@@ -15,9 +15,11 @@ options {
 {% endfor %}
     };
 
+    allow-transfer { {{ allow_transfer | join('; ') }}; };
+
     // Enable recursion
-    recursion yes;
-    allow-recursion { any; };
+    // recursion yes;
+    // allow-recursion { any; };
 
     // Security settings
     dnssec-validation no;
