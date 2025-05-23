@@ -9,7 +9,7 @@ $TTL {{ zone_minimum }}
         )
 
 ; Name servers
-@   IN  NS  ns1.{{ dns_server_name }}.
+@   IN  NS  {{ dns_server_name }}.
 
 ; A records
 {{ dns_server_name }}.  IN  A   {{ dns_server_ip }}
