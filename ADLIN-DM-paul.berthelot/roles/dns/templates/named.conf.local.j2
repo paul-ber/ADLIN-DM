@@ -1,0 +1,10 @@
+// Local zones configuration for {{ domain_name }}
+
+zone "{{ domain_name }}" {
+    type master;
+    file "/etc/bind/zones/{{ domain_name }}.zone";
+    allow-transfer { {{ allow_transfer | join('; ') }}; };
+    allow-query { any; };
+    notify yes;
+};
+

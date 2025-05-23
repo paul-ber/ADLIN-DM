@@ -1,0 +1,19 @@
+---
+- name: Deploy DNS infrastructure
+  hosts: dns_servers
+  become: true
+  roles:
+    - dns
+
+- name: Verify DNS configuration
+  hosts: dns_servers
+  become: true
+  tasks:
+    - name: Test DNS resolution
+      command: dig @localhost {{ student_number }}.srs.adlin
+      register: dns_test
+      changed_when: false
+
+    - name: Display DNS test result
+      debug:
+        var: dns_test.stdout_lines

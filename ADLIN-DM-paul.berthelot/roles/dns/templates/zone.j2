@@ -1,0 +1,24 @@
+; Zone file for {{ domain_name }}
+$TTL {{ zone_minimum }}
+@   IN  SOA {{ dns_server_name }}. admin.{{ domain_name }}. (
+            {{ zone_serial }}  ; Serial
+            {{ zone_refresh }}  ; Refresh
+            {{ zone_retry }}    ; Retry
+            {{ zone_expire }}   ; Expire
+            {{ zone_minimum }}  ; Minimum TTL
+        )
+
+; Name servers
+@   IN  NS  {{ dns_server_name }}.
+
+; A records
+{{ dns_server_name }}.  IN  A   {{ dns_server_ip }}
+ns1                     IN  A   {{ dns_server_ip }}
+
+; Example web services (for future use)
+web1                    IN  A   {{ dns_server_ip }}
+web2                    IN  A   {{ dns_server_ip }}
+web3                    IN  A   {{ dns_server_ip }}
+web4                    IN  A   {{ dns_server_ip }}
+ilovecats               IN  A   {{ dns_server_ip }}
+

@@ -1,0 +1,94 @@
+---
+- name: Install BIND9 packages
+  apt:
+    name: "{{ bind_packages }}"
+    state: present
+    update_cache: yes
+
+- name: Create BIND9 directories
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: bind
+    group: bind
+    mode: '0755'
+  loop:
+    - /etc/bind/zones
+    - /var/log/bind
+
+- name: Configure BIND9 main configuration
+  template:
+    src: named.conf.j2
+    dest: /etc/bind/named.conf
+    owner: root
+    group: bind
+    mode: '0644'
+    backup: yes
+  notify: restart bind9
+
+- name: Configure BIND9 local zones
+  template:
+    src: named.conf.local.j2
+    dest: /etc/bind/named.conf.local
+    owner: root
+    group: bind
+    mode: '0644'
+    backup: yes
+  notify: restart bind9
+
+- name: Create zone file
+  template:
+    src: zone.j2
+    dest: "/etc/bind/zones/{{ domain_name }}.zone"
+    owner: root
+    group: bind
+    mode: '0644'
+    backup: yes
+  notify:
+    - restart bind9
+    - reload bind9
+
+- name: Configure BIND9 logging
+  copy:
+    content: |
+      logging {
+          channel default_log {
+              file "/var/log/bind/default.log" versions 3 size 5m;
+              severity info;
+              print-time yes;
+          };
+          category default { default_log; };
+      };
+    dest: /etc/bind/named.conf.log
+    owner: root
+    group: bind
+    mode: '0644'
+  notify: restart bind9
+
+- name: Start and enable BIND9 service
+  systemd:
+    name: "{{ bind_service }}"
+    state: started
+    enabled: yes
+
+- name: Configure firewall for DNS
+  ufw:
+    rule: allow
+    port: '53'
+    proto: "{{ item }}"
+  loop:
+    - tcp
+    - udp
+  when: ansible_facts['os_family'] == "Debian"
+
+- name: Test DNS configuration
+  command: named-checkconf
+  register: named_checkconf_result
+  changed_when: false
+  failed_when: named_checkconf_result.rc != 0
+
+- name: Test zone file syntax
+  command: "named-checkzone {{ domain_name }} /etc/bind/zones/{{ domain_name }}.zone"
+  register: named_checkzone_result
+  changed_when: false
+  failed_when: named_checkzone_result.rc != 0

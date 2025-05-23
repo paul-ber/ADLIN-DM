@@ -1,0 +1,15 @@
+---
+# Student-specific variables (will be overridden by inventory)
+student_number: "{{ student_number | default('00') }}"
+domain_name: "{{ student_number }}.srs.adlin"
+dns_server_name: "ns1.{{ domain_name }}"
+
+# BIND9 packages
+bind_packages:
+  - bind9
+  - bind9utils
+  - bind9-doc
+  - dnsutils
+
+# Service name
+bind_service: named

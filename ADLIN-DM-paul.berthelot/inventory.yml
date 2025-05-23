@@ -1,0 +1,10 @@
+all:
+  children:
+    dns_servers:
+      hosts:
+        dns-server:
+          ansible_host: 10.42.8.1
+          ansible_user: ansible
+          ansible_password: ansible
+      vars:
+        student_number: 8

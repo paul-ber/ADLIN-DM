@@ -1,0 +1,34 @@
+// BIND9 configuration for {{ domain_name }}
+include "/etc/bind/named.conf.options";
+include "/etc/bind/named.conf.local";
+include "/etc/bind/named.conf.default-zones";
+include "/etc/bind/named.conf.log";
+
+options {
+    directory "/var/cache/bind";
+
+    // Listen on all interfaces
+    listen-on { {{ listen_on | join('; ') }}; };
+    listen-on-v6 { any; };
+
+    // Allow queries from anywhere
+    allow-query { {{ allow_query | join('; ') }}; };
+
+    // Forward queries to public DNS
+    forwarders {
+{% for forwarder in dns_forwarders %}
+        {{ forwarder }};
+{% endfor %}
+    };
+
+    // Enable recursion
+    recursion yes;
+    allow-recursion { any; };
+
+    // Security settings
+    dnssec-validation auto;
+    auth-nxdomain no;
+
+    // Performance
+    max-cache-size 256M;
+};
