@@ -94,7 +94,7 @@
   failed_when: named_checkconf_result.rc != 0
 
 - name: Test zone file syntax
-  command: "named-checkzone {{ domain_name }} /etc/bind/zones/{{ domain_name }}.zone"
+  command: "named-checkzone {{ domain_name }} /etc/bind/db.{{ domain_name }}"
   register: named_checkzone_result
   changed_when: false
   failed_when: named_checkzone_result.rc != 0

@@ -12,8 +12,8 @@ $TTL {{ zone_minimum }}
 @   IN  NS  {{ dns_server_name }}.
 
 ; A records
-{{ dns_server_name }}.  IN  A   {{ dns_server_ip }}
-                        IN  A   {{ dns_server_ip }}
+@                       IN  A   {{ dns_server_ip }}
+{{ dns_server_name }}   IN  A   {{ dns_server_ip }}
 ns1                     IN  A   {{ dns_server_ip }}
 
 ; Example web services (for future use)
