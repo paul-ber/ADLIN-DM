@@ -17,8 +17,8 @@
 
 - name: Configure BIND9 main configuration
   template:
-    src: named.conf.j2
-    dest: /etc/bind/named.conf
+    src: named.conf.options.j2
+    dest: /etc/bind/named.conf.options
     owner: root
     group: bind
     mode: '0644'
