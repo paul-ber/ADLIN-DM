@@ -71,6 +71,13 @@
     state: started
     enabled: yes
 
+- name: Ensure UFW is installed
+  apt:
+    name: ufw
+    state: present
+    update_cache: yes
+  when: ansible_facts['os_family'] == "Debian"
+
 - name: Configure firewall for DNS
   ufw:
     rule: allow
